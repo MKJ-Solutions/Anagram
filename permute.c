@@ -9,8 +9,6 @@ void RecursivePermute(char *prefix, char *rest, int *ptr);
 main()
 {
     char letters[] = "AABC";
-    //ListPermutations(letters);
-    //printf("%d\n", Strlen(letters));
     ListPermutations(letters);
 
     return 0;
@@ -40,7 +38,7 @@ void ListPermutations(char *letters)
 
 void RecursivePermute (char *prefix, char *rest, int *ptr)
 {
-    char *temp;
+    char *temp = malloc(sizeof(char *));
     int idx = 0;
     int first_occurance = 0;
     strcpy(temp, rest);
