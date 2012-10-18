@@ -39,6 +39,8 @@ void ListPermutations(char *letters)
 void RecursivePermute (char *prefix, char *rest, int *ptr)
 {
     char *temp = malloc(sizeof(char *));
+    char *new_prefix = malloc(sizeof(char *));
+    char first_char;
     int idx = 0;
     int first_occurance = 0;
     strcpy(temp, rest);
@@ -54,10 +56,18 @@ void RecursivePermute (char *prefix, char *rest, int *ptr)
         while (*rest != '\0')
         {
             
-            //printf("get here %s\n", rest);
             first_occurance = (strchr(temp, *rest) - temp - idx);
             if (!first_occurance)
-                printf("test\n");
+            {
+                //new_prefix = strcat(prefix, rest);
+                first_char = *rest;
+                snprintf(new_prefix, sizeof new_prefix, "%s%s", prefix, &first_char);
+                //printf("Prefix: %s\n", prefix);
+                //printf("Rest : %c\n", first_char);
+                //printf("AM i working? %s\n", new_prefix);
+                RecursivePermute( new_prefix, ++rest, ptr);
+                --rest;
+            }
             rest++;
             idx ++;
         }
