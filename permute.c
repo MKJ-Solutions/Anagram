@@ -47,7 +47,7 @@ void RecursivePermute (char *prefix, char *rest, int *ptr)
     int first_occurance = 0;
     int i;
     FILE *file;
-    strcpy(temp, rest);
+    strncpy(temp, rest,120);
     if (*rest == '\0')
     {
         *ptr += 1;
