@@ -45,11 +45,16 @@ void RecursivePermute (char *prefix, char *rest, int *ptr)
     char rest_char;
     int idx = 0;
     int first_occurance = 0;
+    int i;
+    FILE *file;
     strcpy(temp, rest);
     if (*rest == '\0')
     {
         *ptr += 1;
         printf("Permutation %d: %s\n", *ptr, prefix);
+        file = fopen("permutations.txt", "a");
+        fprintf(file,"%s\n",prefix);
+        fclose(file);
         return;
     }
     else
@@ -59,13 +64,13 @@ void RecursivePermute (char *prefix, char *rest, int *ptr)
         {
             
             first_occurance = (strchr(temp, *rest) - temp - idx);
-            if (!first_occurance)
+            if (first_occurance == 0)
             {
                 rest_char = *rest;
                 rest_left = strncpy(rest_left, rest-idx, idx);
                 rest_right = strncpy(rest_right, rest+1, rest_size-1);
-                snprintf(new_rest, sizeof new_rest, "%s%s", rest_left, rest_right);
-                snprintf(new_prefix, sizeof new_prefix, "%s%s", prefix, &rest_char);
+                sprintf(new_rest, "%s%s", rest_left, rest_right);
+                sprintf(new_prefix,"%s%c", prefix, rest_char);
                 RecursivePermute( new_prefix, new_rest, ptr);
             }
             rest++;
