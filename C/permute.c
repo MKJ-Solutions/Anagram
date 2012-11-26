@@ -7,9 +7,7 @@ void RecursivePermute(char *prefix, char *rest, int *ptr);
 
 main()
 {
-    char letters[] = "AAB";
-    ListPermutations(letters);
-
+    ListPermutations("miles");
     return 0;
 }
 
