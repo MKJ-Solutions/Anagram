@@ -1,0 +1,31 @@
+Project Members: Miles, Johnson, Kyong-Tae
+
+-----------Details-------------
+Project name: Anagram
+Completion Date: February 1st, 2012
+Requirements: Single Player
+	      Six letters
+	      Timed
+	      Scored
+Components: Permutator
+	    Checker->	validate permutations with dictionary
+		   ->	validate user inputs
+	    Timer
+	    Scoring System
+	    Random letter generator	
+
+Wed	Nov 14, 2012	Meeting at 1:30pm
+			Assigned homework to each person: 
+				HelloWorld files in three different languages by 10:30pm of Nov 15, 2012.
+				Permutator(Miles:C, Johnson:C++, Kyong-Tae:Java) by 12:00pm of Nov 18, 2012.
+			Next Meeting: 1:30pm of Nov 21,2012.
+
+
+Wed	Nov 28, 2012	Meeting at 1:30pm(Thode)
+			Redefined the details, presented on the top of the page,
+				of the project for every member to get a clear idea of the project.
+			Defined some company policies, which will be stated under Policy.txt.
+			Defined some future ideas, stated under FutrueIdeas.txt.
+			Until the next meeting, every member is on a vacation.
+			Next Meeting: Jan 7, 2012.
+						                                  
