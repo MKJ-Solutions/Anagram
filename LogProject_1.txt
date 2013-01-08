@@ -46,3 +46,4 @@ array: valid_words
 Methods
 CheckFile( string file )
 CheckWord( string word )
+removeWord()
