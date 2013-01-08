@@ -16,7 +16,8 @@ Components: Permutator
 
 Wed	Nov 14, 2012	Meeting at 1:30pm
 			Assigned homework to each person: 
-				HelloWorld files in three different languages by 10:30pm of Nov 15, 2012.
+				HelloWorld files in three different languages by 10:30pm of Nov 15, 2012.
+
 				Permutator(Miles:C, Johnson:C++, Kyong-Tae:Java) by 12:00pm of Nov 18, 2012.
 			Next Meeting: 1:30pm of Nov 21,2012.
 
@@ -28,4 +29,10 @@ Wed	Nov 28, 2012	Meeting at 1:30pm(Thode)
 			Defined some future ideas, stated under FutrueIdeas.txt.
 			Until the next meeting, every member is on a vacation.
 			Next Meeting: Jan 7, 2012.
+
+Tues	Jan 08, 2013	Meeting at 15:00 (HSC)
+			Checker due by January 15.
+			JC, MT, KT Checker MUST be completed by Jan 09 08:00
+			Timer MUST be completed by Jan 12 20:00
+			
 						                                  
