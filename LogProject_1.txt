@@ -36,3 +36,13 @@ Tues	Jan 08, 2013	Meeting at 15:00 (HSC)
 			Timer MUST be completed by Jan 12 20:00
 			
 						                                  
+
+Checker
+----------
+Attributes
+boolan: valid
+array: valid_words
+
+Methods
+CheckFile( string file )
+CheckWord( string word )
