@@ -17,7 +17,6 @@
  * 1. If comparing strings (*char) with ==
  *    You are actually comparing their addresses
  *    Solution to this is use strcmp or strcasecmp
- *
  */
 
 #include <stdlib.h>
