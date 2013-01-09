@@ -27,25 +27,25 @@ typedef int bool;
 
 #define MAXSIZE 6
 /* Function Prototypes */
-void write_valid_words(char *input_file, char *dictionary_file, char *output_file);
+void CheckFile(char *input_file, char *dictionary_file, char *output_file);
 char *trimwhitespace(char *str);
 
 int main(void){
     char *input_name = "permutations.txt";
     char *dictionary_name = "dictionary.txt";
     char *output_name = "words.txt";
-    write_valid_words(input_name, dictionary_name, output_name);
+    CheckFile(input_name, dictionary_name, output_name);
     return 0;
 }
 
 /*
- * Function: write_valid_words
+ * Function: CheckFile
  * =============================
  * Descriptions: Takes in list of words and dictionary files, and appends to specified
  *               output file
  *               
  */
-void write_valid_words(char *input_file, char *dictionary_file, char *output_file)
+void CheckFile(char *input_file, char *dictionary_file, char *output_file)
 {
     /* Open files as read or append */
     FILE *input, *dictionary, *output;
