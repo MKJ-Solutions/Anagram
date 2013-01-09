@@ -4,9 +4,7 @@
  * Last Updated: 11/25/2012
  * =========================
  * Description: This will take in a dictionary text file, and input text file, and verify input 
- *              text files for valid words.
- *              Ouput file is words.txt
- *              Dictionary file is dictionary.txt            
+ *              text files for valid words. Ouput file is words.txt.Dictionary file is dictionary.txt            
  *
  */
 
@@ -27,9 +25,10 @@ typedef int bool;
 #define True 1
 #define False 0
 
+#define MAXSIZE 6
 /* Function Prototypes */
-char *trimwhitespace(char *str);
 void write_valid_words(char *input_file, char *dictionary_file, char *output_file);
+char *trimwhitespace(char *str);
 
 int main(void){
     char *input_name = "permutations.txt";
@@ -57,8 +56,8 @@ void write_valid_words(char *input_file, char *dictionary_file, char *output_fil
     /* Read from files */
     if (input != NULL && dictionary!= NULL)
     {
-        char *iline = malloc(20*sizeof(char)); 
-        char *dline = malloc(20*sizeof(char));
+        char *iline = malloc(MAXSIZE*sizeof(char)); 
+        char *dline = malloc(MAXSIZE*sizeof(char));
 
         while (fgets (iline, sizeof iline, input) != NULL)
         {
