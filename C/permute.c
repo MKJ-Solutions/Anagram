@@ -35,17 +35,17 @@ void ListPermutations(char *letters)
 
 void RecursivePermute (char *prefix, char *rest, int *ptr)
 {
-    char *temp = malloc(sizeof(char *));
+    char *temp       = malloc(sizeof(char *));
     char *new_prefix = malloc(sizeof(char *));
-    char *rest_left = malloc(sizeof(char *));
+    char *rest_left  = malloc(sizeof(char *));
     char *rest_right = malloc(sizeof(char *));
-    char *new_rest = malloc(sizeof(char *));
+    char *new_rest   = malloc(sizeof(char *));
     char rest_char;
     int idx = 0;
     int first_occurance = 0;
     int i;
     FILE *file;
-    strncpy(temp, rest,120);
+    strncpy(temp, rest, 120);
     if (*rest == '\0')
     {
         *ptr += 1;
