@@ -24,17 +24,20 @@
 typedef int bool;
 #define True 1
 #define False 0
+#define MAXSIZE 128
+#define MAXWORDS 53000
 
-#define MAXSIZE 6
 /* Function Prototypes */
-void CheckFile(char *input_file, char *dictionary_file, char *output_file);
+size_t CheckFile(const char *input_file, const char *output_file, const char *dicitonary_file);
+static size_t LoadDictionary(const char *faname, size_t max_words, char *word_list[max_words]);
+static void FreeDictionary(size_t word_count, char *word_list[word_count]);
 char *trimwhitespace(char *str);
 
 int main(void){
-    char *input_name = "permutations.txt";
-    char *dictionary_name = "dictionary.txt";
-    char *output_name = "words.txt";
-    CheckFile(input_name, dictionary_name, output_name);
+    const char *input_name = "permutations.txt";
+    const char *dictionary_name = "dictionary.txt";
+    const char *output_name = "words.txt";
+    CheckFile(input_name, output_name, dictionary_name);
     return 0;
 }
 
@@ -45,67 +48,78 @@ int main(void){
  *               output file
  *               
  */
-void CheckFile(char *input_file, char *dictionary_file, char *output_file)
+size_t CheckFile(const char *input_file, const char *output_file, const char *dictionary_file)
 {
-    /* Open files as read or append */
-    FILE *input, *dictionary, *output;
-    input = fopen(input_file, "r");
-    dictionary = fopen(dictionary_file, "r");
-    output = fopen(output_file,"a");
-
-    /* Read from files */
-    if (input != NULL && dictionary!= NULL)
+    /*Load the dicitonary*/
+    char *dictionary[MAXWORDS] = {0};
+    size_t dictionary_size = LoadDictionary(dictionary_file, MAXWORDS, dictionary);
+    int i = 0;
+    for (i=0; i<dictionary_size; i++)
     {
-        char *iline = malloc(MAXSIZE*sizeof(char)); 
-        char *dline = malloc(MAXSIZE*sizeof(char));
+        printf("MyDic: %s\n",dictionary[i]);
+    }
+    printf("Dictionary Size: %d\n", dictionary_size);
 
-        while (fgets (iline, sizeof iline, input) != NULL)
+    FILE *input = fopen(input_file, "r");
+    FILE *output = fopen(output_file, "a");
+    
+    if (input)
+    {
+        char fmt[64], word[MAXSIZE];
+        sprintf(fmt, " %%%ds", MAXSIZE-1);
+        while (fscanf(input, fmt, word) == 1)
         {
-            while (fgets (dline, sizeof dline, dictionary) != NULL)
+            /* TODO: Use the bsearch() call to improve the performace */
+            size_t i=0;
+            for (i=0; i<dictionary_size; i++)
             {
-                trimwhitespace(iline);
-                trimwhitespace(dline);
-                if (strcasecmp(iline, dline) == 0 )
+                if (strcasecmp(word, dictionary[i]) == 0)
                 {
-                    fprintf(output, "%s\n",iline);
+                    printf("Valid Word: %s\n", word);
+                    fprintf(output, "%s\n", word);
                 }
-
             }
-            rewind(dictionary);
         }
-
-        fclose(input);
-        fclose(dictionary);
-        fclose(output);
-        free(iline);
-        free(dline);
     }
     else
     {
-        printf("An error has occured\n");
+        printf("Error input file %s not found", input_file);
     }
+    fclose(input);
+    fclose(output);
+    FreeDictionary(dictionary_size, dictionary);
+
+    return True;
 }
 
-/*
- * Function: trimwhitesapce(char *str)
- * Description: This function removes any whitespace
- */
-char *trimwhitespace(char *str)
+
+size_t LoadDictionary(const char* fname, size_t max_words, char *word_list[max_words])
 {
-  char *end;
+    int count = 0;
+    memset(word_list, 0, sizeof(*word_list)*max_words);
+    FILE *fp = fopen(fname, "r");
 
-  /* Trim leading Whitespace */
-  while(isspace(*str)) str++;
+    if (fp)
+    {   
+        char fmt[64], word[MAXSIZE];
+        sprintf(fmt, " %%%ds", MAXSIZE-1);
+        while (fscanf(fp, fmt, word) == 1 && count < max_words)
+        {   
+            word_list[count] = malloc(strlen(word)+1);
+            strcpy(word_list[count++], word);
+        }   
+        fclose(fp);
+    
+        /* TODO: sort the word list using `qsort()` to allow binary searching
+           and O(logN) search time to find if a word is in the list */
+    }   
+    return count;
 
-  /* Check if string is empty*/
-  if(*str == 0) { return str; }
+}
 
-  /* Trim trailing whitesapce */
-  end = str + strlen(str) - 1;
-  while(end > str && isspace(*end)) end--; 
 
-  /* Add new terminating character */
-  *(end+1) = 0;
-
-  return str;
+void FreeDictionary(size_t word_count, char *word_list[word_count])
+{
+    size_t i;
+    for ( i=0; i<word_count; free(word_list[i]), word_list[i++]=0);
 }
