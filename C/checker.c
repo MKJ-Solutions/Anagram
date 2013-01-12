@@ -1,20 +1,12 @@
 /*
- * File: verify_word.c
+ * File: checker.c
  * Author: Miles Tjandrawidjaja
- * Last Updated: 11/25/2012
+ * Credits: WhozCraig
+ * Last Updated: 01/12/2013
  * =========================
  * Description: This will take in a dictionary text file, and input text file, and verify input 
- *              text files for valid words. Ouput file is words.txt.Dictionary file is dictionary.txt            
+ *              text files for valid words. Ouput file is words.txt.
  *
- */
-
-
-/*
- * Notes
- * ==========
- * 1. If comparing strings (*char) with ==
- *    You are actually comparing their addresses
- *    Solution to this is use strcmp or strcasecmp
  */
 
 #include <stdlib.h>
@@ -25,43 +17,49 @@ typedef int bool;
 #define True 1
 #define False 0
 #define MAXSIZE 128
-#define MAXWORDS 53000
+#define DICTSIZE 53000
+#define MAXWORDS 50
 
 /* Function Prototypes */
-size_t CheckFile(const char *input_file, const char *output_file, const char *dicitonary_file);
-static size_t LoadDictionary(const char *faname, size_t max_words, char *word_list[max_words]);
-static void FreeDictionary(size_t word_count, char *word_list[word_count]);
-char *trimwhitespace(char *str);
+unsigned int CheckFile(const char *input_file, const char *output_file, const char *dicitonary_file);
+static size_t LoadFile(const char *faname, size_t max_words, char *word_list[max_words]);
+static void FreeFile(size_t word_count, char *word_list[word_count]);
 
 int main(void){
     const char *input_name = "permutations.txt";
     const char *dictionary_name = "dictionary.txt";
     const char *output_name = "words.txt";
-    CheckFile(input_name, output_name, dictionary_name);
+    unsigned int num_words;
+    num_words = CheckFile(input_name, output_name, dictionary_name);
+    char *valid_words[MAXWORDS] = {0};
+    size_t random = LoadFile(output_name, MAXWORDS, valid_words);
+    int i;
+    for (i=0; i<random; i++)
+    {
+        printf("MyDic: %s\n",valid_words[i]);
+    }
+    printf("Dictionary Size: %d\n", random);
+    
     return 0;
 }
 
 /*
  * Function: CheckFile
  * =============================
- * Descriptions: Takes in list of words and dictionary files, and appends to specified
- *               output file
+ * Descriptions: Input location for input file and dictionary file and write the intersection of contents into output file
  *               
  */
-size_t CheckFile(const char *input_file, const char *output_file, const char *dictionary_file)
+unsigned int CheckFile(const char *input_file, const char *output_file, const char *dictionary_file)
 {
     /*Load the dicitonary*/
-    char *dictionary[MAXWORDS] = {0};
-    size_t dictionary_size = LoadDictionary(dictionary_file, MAXWORDS, dictionary);
-    int i = 0;
-    for (i=0; i<dictionary_size; i++)
-    {
-        printf("MyDic: %s\n",dictionary[i]);
-    }
-    printf("Dictionary Size: %d\n", dictionary_size);
+    char *dictionary[DICTSIZE] = {0};
+    size_t dictionary_size = LoadFile(dictionary_file, DICTSIZE, dictionary);
+    int i;
+    int num_words = 0;
+    char *ptr_item;
 
     FILE *input = fopen(input_file, "r");
-    FILE *output = fopen(output_file, "a");
+    FILE *output = fopen(output_file, "w");
     
     if (input)
     {
@@ -70,12 +68,21 @@ size_t CheckFile(const char *input_file, const char *output_file, const char *di
         while (fscanf(input, fmt, word) == 1)
         {
             /* TODO: Use the bsearch() call to improve the performace */
-            size_t i=0;
+            /*ptr_item = bsearch(word, dictionary, dictionary_size, strlen(word)+1, (int(*)(const void*, const void*))strcasecmp);
+            if (ptr_item != NULL)
+            {
+                num_words++;
+                fprintf(output, "%s\n", word);
+            }
+            else
+            {
+                printf("Nothing was found\n");
+            }*/
             for (i=0; i<dictionary_size; i++)
             {
                 if (strcasecmp(word, dictionary[i]) == 0)
                 {
-                    printf("Valid Word: %s\n", word);
+                    num_words++;
                     fprintf(output, "%s\n", word);
                 }
             }
@@ -87,13 +94,19 @@ size_t CheckFile(const char *input_file, const char *output_file, const char *di
     }
     fclose(input);
     fclose(output);
-    FreeDictionary(dictionary_size, dictionary);
+    FreeFile(dictionary_size, dictionary);
 
-    return True;
+    return num_words;
 }
 
 
-size_t LoadDictionary(const char* fname, size_t max_words, char *word_list[max_words])
+/*
+ * Function: LoadFile
+ * =============================
+ * Descriptions: Load contents of text file into memory
+ *               
+ */
+size_t LoadFile(const char* fname, size_t max_words, char *word_list[max_words])
 {
     int count = 0;
     memset(word_list, 0, sizeof(*word_list)*max_words);
@@ -109,17 +122,20 @@ size_t LoadDictionary(const char* fname, size_t max_words, char *word_list[max_w
             strcpy(word_list[count++], word);
         }   
         fclose(fp);
-    
-        /* TODO: sort the word list using `qsort()` to allow binary searching
-           and O(logN) search time to find if a word is in the list */
+        /* TODO: May want to look into qsort() */
     }   
     return count;
-
 }
 
 
-void FreeDictionary(size_t word_count, char *word_list[word_count])
+/*
+ * Function: FreeFile
+ * =============================
+ * Descriptions: Release word list that was loaded from LoadFile
+ *               
+ */
+void FreeFile(size_t word_count, char *word_list[word_count])
 {
     size_t i;
-    for ( i=0; i<word_count; free(word_list[i]), word_list[i++]=0);
+    for (i=0; i<word_count; free(word_list[i]), word_list[i++]=0);
 }
