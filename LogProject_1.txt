@@ -12,7 +12,33 @@ Components: Permutator
 		   ->	validate user inputs
 	    Timer
 	    Scoring System
-	    Random letter generator	
+	    Random letter generator
+
+Checker
+----------
+Attributes
+boolan: valid
+array: valid_words
+
+Methods
+CheckFile( string file )
+CheckWord( string word )
+removeWord()
+
+Timer
+-------
+Attributes
+
+
+ScoringSystem
+--------------
+-min length of a word: 3
+-min score: 50
+-additional letter: 10
+-if a word uses all given letters: 100 in total
+-something to track score(some variable)
+-keep high scores(optional)
+	
 
 Wed	Nov 14, 2012	Meeting at 1:30pm
 			Assigned homework to each person: 
@@ -35,15 +61,11 @@ Tues	Jan 08, 2013	Meeting at 15:00 (HSC)
 			JC, MT, KT Checker MUST be completed by Jan 09 08:00
 			Timer MUST be completed by Jan 12 20:00
 			
-						                                  
+						                                 
 
-Checker
-----------
-Attributes
-boolan: valid
-array: valid_words
-
-Methods
-CheckFile( string file )
-CheckWord( string word )
-removeWord()
+Tues	Jan 15, 2013	Meeting at 14:00 (Thode)
+			*******OUR PROJECT IS DUE IN 2 WEEKS!!!!!!*******
+			*******SOLID DUE DATE(ABSOLUTE)*******
+			- Timer must be completed by Jan 17, 2013
+			- Scoring System must be completed by Jan 20, 2013, and should have some GUI done.
+			- Figure out how to generate power set of given letters.
